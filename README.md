@@ -1,4 +1,4 @@
-# newprojectfront
+# Speaker Identification web app
 
 ## Project setup
 ```
@@ -8,6 +8,24 @@ npm install
 ### Compiles and hot-reloads for development
 ```
 npm run serve
+```
+
+### Run backend on local:
+```
+cd backend
+python auth_api.py
+```
+
+### test user accounts:
+Regular user:
+```
+email: user@speaker.com
+password: user123
+```
+Admin user:
+```
+email: admin@user.com
+password: admin123
 ```
 
 ### Compiles and minifies for production
