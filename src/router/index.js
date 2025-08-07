@@ -1,19 +1,53 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import RegistrationView from '../views/RegistrationView.vue'
+import ProfileView from '@/views/ProfileView.vue'
+import DashboardView from '@/views/DashboardView.vue'
+import TrainingView from '@/views/TrainingView.vue'
+import ServingView from '@/views/ServingView.vue'
+import ModelManageView from '@/views/ModelManageView.vue'
+import DataListView from '@/views/DataListView.vue'
+import DatasetDetails from '@/views/DatasetDetails.vue'
 
 const routes = [
   {
     path: '/',
-    name: 'home',
-    component: HomeView
+    name: 'regristation',
+    component: RegistrationView
   },
   {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
+    path: '/profile',
+    name: 'Profile',
+    component: ProfileView
+  },
+  {
+    path: "/dashboard",
+    name: "Dashboard",
+    component: DashboardView
+  },
+  {
+    path: '/training',
+    name: 'Training',
+    component: TrainingView
+  },
+  {
+    path: '/serving',
+    name: 'Serving',
+    component: ServingView
+  },
+  {
+    path: '/models',
+    name: 'Models',
+    component: ModelManageView
+  },
+  {
+    path: '/datasetslibrary',
+    name: 'DatasetsLibrary',
+    component: DataListView
+  },
+  {
+    path: '/dataset/:id',
+    name: 'DatasetDetails',
+    component: DatasetDetails
   }
 ]
 

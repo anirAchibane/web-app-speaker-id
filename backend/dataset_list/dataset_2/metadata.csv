@@ -1,0 +1,17 @@
+utterance,name,gender,nationality,use
+utterance_001,John Smith,male,American,training
+utterance_002,John Smith,male,American,training
+utterance_003,John Smith,male,American,test
+utterance_004,John Smith,male,American,test
+utterance_005,Maria Garcia,female,Spanish,training
+utterance_006,Maria Garcia,female,Spanish,training
+utterance_007,Maria Garcia,female,Spanish,training
+utterance_008,Maria Garcia,female,Spanish,test
+utterance_009,Chen Wei,male,Chinese,training
+utterance_010,Chen Wei,male,Chinese,training
+utterance_011,Chen Wei,male,Chinese,test
+utterance_012,Chen Wei,male,Chinese,test
+utterance_013,Sarah Johnson,female,British,training
+utterance_014,Sarah Johnson,female,British,training
+utterance_015,Sarah Johnson,female,British,test
+utterance_016,Sarah Johnson,female,British,test
