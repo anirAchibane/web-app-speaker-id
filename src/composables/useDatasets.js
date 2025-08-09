@@ -1,4 +1,4 @@
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 
 export function useDatasets() {
   const datasets = ref([])
@@ -23,22 +23,10 @@ export function useDatasets() {
       loading.value = false
     }
   }
-
-  const totalDatasets = computed(() => datasets.value.length)
-  const totalUtterances = computed(() => 
-    datasets.value.reduce((sum, dataset) => sum + dataset.utterances, 0)
-  )
-  const totalSpeakers = computed(() => 
-    datasets.value.reduce((sum, dataset) => sum + dataset.speakers, 0)
-  )
-
   return {
     datasets,
     loading,
     error,
     fetchDatasets,
-    totalDatasets,
-    totalUtterances,
-    totalSpeakers
   }
 }
