@@ -4,47 +4,44 @@ from pydantic import BaseModel
 
 app = FastAPI()
 
-# Enable CORS for frontend connection
+# frontend connection
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:8080", "http://127.0.0.1:8080"],
+    allow_origins=["http://localhost:8080"],  # Vue.js dev server
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# Mock database
+
+# Mock DB
 users_db = {
     "user@speaker.com":{
-        "firstName": "John",
-        "lastName": "Doe",
+        "firstName": "Anir",
+        "lastName": "anir",
         "email": "user@speaker.com",
         "password": "user123",
         "admin": False
         },
     "admin@speaker.com":{
         "firstName": "Admin",
-        "lastName": "User",
+        "lastName": "admin",
         "email": "admin@speaker.com",
         "password": "admin123",
         "admin": True
     }
 }
 
-# Mock datasets data
 datasets_db = {
     "dataset_1": {
         "id": "dataset_1",
         "name": "Speech Dataset 1",
         "description": "Multi-speaker speech dataset with diverse nationalities and genders",
-        "type": "Audio/Speech",
         "speakers": 4,
         "utterances": 16,
-        "languages": ["English", "Spanish", "Chinese"],
         "format": "WAV",
         "size": "45.2 MB",
         "created": "2024-01-15",
-        "lastUpdated": "2024-07-20",
         "usage": {
             "training": 12,
             "test": 4
@@ -71,14 +68,11 @@ datasets_db = {
         "id": "dataset_2",
         "name": "Speech Dataset 2",
         "description": "Extended speech dataset with high-quality recordings from multiple speakers",
-        "type": "Audio/Speech",
         "speakers": 4,
         "utterances": 16,
-        "languages": ["English", "Spanish", "Chinese"],
         "format": "WAV",
         "size": "52.8 MB",
         "created": "2024-02-10",
-        "lastUpdated": "2024-07-25",
         "usage": {
             "training": 12,
             "test": 4
@@ -102,7 +96,7 @@ datasets_db = {
     }
 }
 
-# Pydantic models
+# Request bodies
 class UserSignup(BaseModel):
     firstName: str
     lastName: str
@@ -123,9 +117,6 @@ class UserUpdate(BaseModel):
 class DeleteAccount(BaseModel):
     email: str
 
-@app.get("/")
-async def root():
-    return {"message": "Speaker Identification Platform API"}
 
 @app.post("/auth/signup")
 async def signup(user: UserSignup):
@@ -150,7 +141,7 @@ async def signup(user: UserSignup):
 
 @app.post("/auth/login")
 async def login(user: UserLogin):
-    # Check if user exists
+    # if user doesn't exist
     if user.email not in users_db:
         raise HTTPException(status_code=401, detail="Invalid email or password")
     
@@ -171,7 +162,6 @@ async def login(user: UserLogin):
 
 @app.get("/auth/users")
 async def get_all_users():
-    """Get all users (for testing purposes)"""
     users_list = []
     for email, user_data in users_db.items():
         users_list.append({
@@ -184,7 +174,7 @@ async def get_all_users():
 
 @app.post("/auth/make-admin/{email}")
 async def make_admin(email: str):
-    """Make a user admin (for testing purposes)"""
+    
     if email not in users_db:
         raise HTTPException(status_code=404, detail="User not found")
     
