@@ -22,12 +22,6 @@
                         </div>
                         <div class="title-content">
                             <h1>{{ dataset.name }}</h1>
-                            <div class="status-badge active">
-                                <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16">
-                                    <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
-                                </svg>
-                                Active
-                            </div>
                         </div>
                     </div>
                     <p class="description">{{ dataset.description || 'Professional audio dataset for speaker identification and machine learning applications' }}</p>
@@ -46,12 +40,6 @@
                         </svg>
                         Export Metadata
                     </button>
-                    <router-link to="/datasetslibrary" class="btn-tertiary action-btn">
-                        <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                            <path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zm3.5 6L9.854 7.646a.5.5 0 0 1-.708 0L8 6.5l-1.146 1.146a.5.5 0 0 1-.708 0L4.5 6a.5.5 0 0 1 .708-.708L7 7.084V3.5a.5.5 0 0 1 1 0v3.584l1.792-1.792A.5.5 0 0 1 11.5 6z"/>
-                        </svg>
-                        Back to Library
-                    </router-link>
                 </div>
             </div>
 
@@ -335,23 +323,6 @@ const femalePercentage = computed(() => {
 const getTotalSpeakers = () => {
     if (!dataset.value?.nationalityDistribution) return 1 // Avoid division by zero
     return Object.values(dataset.value.nationalityDistribution).reduce((sum, count) => sum + count, 0) || 1
-}
-
-const getDefaultSpeakers = () => {
-    return [
-        { id: 'speaker_001', videos: ['video_001', 'video_002'] },
-        { id: 'speaker_002', videos: ['video_003', 'video_004'] },
-        { id: 'speaker_003', videos: ['video_005', 'video_006'] },
-        { id: 'speaker_004', videos: ['video_007', 'video_008'] }
-    ]
-}
-
-const getDefaultNationalities = () => {
-    return {
-        'American': 2,
-        'British': 1,
-        'Canadian': 1
-    }
 }
 
 const fetchDatasetDetails = async () => {

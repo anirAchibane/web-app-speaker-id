@@ -15,9 +15,6 @@
                            <h3 class="card-title">
                                Recent Datasets
                            </h3>
-                           <button class="view-all-btn" @click="$router.push('/datasetslibrary')">
-                               View All
-                           </button>
                        </div>
                    </div>
                    <div class="recent-datasets">
@@ -45,7 +42,7 @@
                        </div>
                        <div v-else class="empty-state enhanced-empty">
                            <h4>No datasets yet</h4>
-                           <p>Start by uploading your first dataset to begin training models</p>
+                           <p>Start by uploading your first dataset</p>
                            <button class="btn-primary" @click="UploadDataset()">
                                <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
                                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
@@ -63,18 +60,34 @@
                               
                                Recent Models
                            </h3>
-                           <button class="view-all-btn" @click="goToModels()">
-                               View All
-                           </button>
                        </div>
                    </div>
                    <div class="recent-models">
-                       <div v-if="false">
-                           <!-- Model list will go here -->
+                       <div v-if="recentModels.length > 0" class="dataset-list">
+                        <div v-for="model in recentModels" :key="model.id" class="dataset-item">
+                            <div class="dataset-icon">
+                              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                                <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                                <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                              </svg>
+                            </div>
+                            <div class="dataset-info">
+                              <h5 class="dataset-name">{{ model.name }}</h5>
+                              <p class="dataset-details">{{ model.accuracy || 0 }} % • {{ model.size || 'Unknown size' }}</p>
+                            </div>
+                            <router-link :to="`/model/${model.id}`" class="dataset-link">
+                               <button class="view-all-btn">View Details</button>
+                            </router-link>
+                           </div>
+                      </div>
+                      <div v-else-if="loadingModels" class="loading-state">
+                           <div class="loading-spinner"></div>
+                           <p>Loading models...</p>
                        </div>
                        <div v-else class="empty-state enhanced-empty">
                            <h4>No models available</h4>
-                           <p>Train your first model to start speaker identification</p>
+                           <p>Start by training your first model</p>
                            <button class="btn-secondary" @click="goToModels()">
                                <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
                                    <path d="M1 2.828c.885-.37 2.154-.769 3.388-.893 1.33-.134 2.458.063 3.112.752v9.746c-.935-.53-2.12-.603-3.213-.493-1.18.12-2.37.461-3.287.811V2.828zm7.5-.141c.654-.689 1.782-.886 3.112-.752 1.234.124 2.503.523 3.388.893v9.923c-.918-.35-2.107-.692-3.287-.81-1.094-.111-2.278-.039-3.213.492V2.687z"/>
@@ -146,6 +159,19 @@
                               </div>
                           </button>
                        </router-link>
+                       
+                       <router-link to="/models">
+                          <button class="btn-secondary action-btn">
+                              <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+                                  <path d="M1 2.828c.885-.37 2.154-.769 3.388-.893 1.33-.134 2.458.063 3.112.752v9.746c-.935-.53-2.12-.603-3.213-.493-1.18.12-2.37.461-3.287.811V2.828zm7.5-.141c.654-.689 1.782-.886 3.112-.752 1.234.124 2.503.523 3.388.893v9.923c-.918-.35-2.107-.692-3.287-.81-1.094-.111-2.278-.039-3.213.492V2.687z"/>
+                                  <path d="M14.5 3a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-1zm-13 0a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-1z"/>
+                              </svg>
+                              <div class="btn-content">
+                                  <span class="btn-title">Browse Models</span>
+                                  <span class="btn-subtitle">Explore available models</span>
+                              </div>
+                          </button>
+                       </router-link>
                    </div>
                </div>
            </div>
@@ -159,20 +185,29 @@ import NavigationBar from '@/components/NavigationBar.vue';
 import { useRouter } from 'vue-router'
 import { onMounted, ref, computed } from 'vue';
 import { useDatasets } from '@/composables/useDatasets';
+import { useModels } from '@/composables/useModels';
 
 const router = useRouter()
 const user = ref(null)
 
 // Datasets functionality
 const { datasets, loading, error, fetchDatasets } = useDatasets()
-if (error){
+const { models, loadingModels, errorModels, fetchModels } = useModels()
+
+if (error) {
   console.log(error)
+}
+if (errorModels) {
+  console.log(errorModels)
 }
 
 
-// Computed property to get at most 3 recent datasets
+// Computed property to get at most 3 recent datasets and models
 const recentDatasets = computed(() => {
   return datasets.value.slice(0, 3)
+})
+const recentModels = computed(() => {
+  return models.value.slice(0, 3)
 })
 
 onMounted(async () => {
@@ -187,6 +222,7 @@ onMounted(async () => {
       
       // Fetch datasets when component mounts
       await fetchDatasets()
+      await fetchModels()
   } catch (error) {
       console.error("Error fetching user:", error)
   }
@@ -197,7 +233,11 @@ const UploadDataset = () => {
 }
 
 const requestAdminPrivilege = () => {
-  /* Send request to access admin */
+  if(confirm("An email request will be sent to one of the admins, continue ?")){
+      alert("Request sent, you will be notified once it's approved")
+      // Send request to access admin
+
+  }
 }
 
 const goToModels = () => {

@@ -4,9 +4,13 @@ import ProfileView from '@/views/ProfileView.vue'
 import DashboardView from '@/views/DashboardView.vue'
 import TrainingView from '@/views/TrainingView.vue'
 import ServingView from '@/views/ServingView.vue'
-import ModelManageView from '@/views/ModelManageView.vue'
+import ModelListView from '@/views/ModelListView.vue'
 import DataListView from '@/views/DataListView.vue'
 import DatasetDetails from '@/views/DatasetDetails.vue'
+import UsersManagement from '@/views/UsersManagement.vue'
+import AddUser from '@/views/AddUser.vue'
+import UploadDataset from '@/views/UploadDataset.vue'
+import ModelDetails from '@/views/ModelDetails.vue'
 
 const routes = [
   {
@@ -37,7 +41,7 @@ const routes = [
   {
     path: '/models',
     name: 'Models',
-    component: ModelManageView
+    component: ModelListView
   },
   {
     path: '/datasetslibrary',
@@ -48,6 +52,26 @@ const routes = [
     path: '/dataset/:id',
     name: 'DatasetDetails',
     component: DatasetDetails
+  },
+  {
+    path: '/users',
+    name: 'UsersManagement',
+    component: UsersManagement
+  },
+  {
+    path: "/addUser",
+    name: "AddUser",
+    component: AddUser
+  },
+  {
+    path: "/uploadDataset",
+    name: "UploadDataset",
+    component: UploadDataset
+  },
+  {
+    path: "/model/:id",
+    name: "ModelDetails",
+    component: ModelDetails
   }
 ]
 

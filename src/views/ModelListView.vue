@@ -4,15 +4,15 @@
         <!-- Professional Header Section -->
         <div class="page-header">
             <div class="header-content">
-                <h1 class="page-title">Dataset Library</h1>
-                <p class="page-subtitle">Explore available audio datasets.</p>
+                <h1 class="page-title">Model Library</h1>
+                <p class="page-subtitle">Explore available trained models.</p>
             </div>
             <div class="header-actions">
-                <button class="btn-primary" @click="$router.push('/uploadDataset')">
+                <button class="btn-primary" @click="$router.push('/training')">
                     <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
                         <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
                     </svg>
-                    Upload Dataset
+                    Train Model
                 </button>
             </div>
         </div>
@@ -20,7 +20,7 @@
         <!-- Loading State -->
         <div v-if="loading" class="loading-state">
             <div class="loading-spinner"></div>
-            <p>Loading datasets...</p>
+            <p>Loading models...</p>
         </div>
 
         <!-- Error State -->
@@ -30,9 +30,9 @@
                     <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
                 </svg>
             </div>
-            <h3>Failed to load datasets</h3>
+            <h3>Failed to load models</h3>
             <p>{{ error }}</p>
-            <button @click="fetchDatasets" class="btn-primary retry-btn">
+            <button @click="fetchModels" class="btn-primary retry-btn">
                 <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
                     <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"/>
                     <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z"/>
@@ -42,24 +42,24 @@
         </div>
 
         <!-- Empty State -->
-        <div v-else-if="!datasets || !datasets.length" class="empty-state">
+        <div v-else-if="!models || !models.length" class="empty-state">
             <div class="empty-icon">
                 <svg width="64" height="64" fill="currentColor" viewBox="0 0 16 16">
-                    <path d="M4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H4zm0 1h8a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z"/>
-                    <path d="M6 4.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5z"/>
+                    <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z"/>
+                    <path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319z"/>
                 </svg>
             </div>
-            <h3>No datasets found</h3>
-            <p>Start by uploading your first dataset to begin building your collection</p>
-            <button class="btn-primary" @click="$router.push('/upload')">
+            <h3>No models found</h3>
+            <p>Start by training your first model to begin building your collection</p>
+            <button class="btn-primary" @click="$router.push('/training')">
                 <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
                     <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
                 </svg>
-                Upload Dataset
+                Train Model
             </button>
         </div>
 
-        <!-- Dataset Grid -->
+        <!-- Model Grid -->
         <div v-else class="datasets-section">
             <div class="section-header">
                 <div class="filters-container">
@@ -68,73 +68,54 @@
                         <input 
                             type="text" 
                             v-model="searchQuery"
-                            placeholder="Search datasets..."
+                            placeholder="Search by name or architecture..."
                             class="search-input"
                         />
                     </div>
-
-                    <!-- Format Filter -->
-                    <div class="filter-container">
-                        <select v-model="formatFilter" class="filter-select">
-                            <option value="">All Formats</option>
-                            <option value="WAV">WAV</option>
-                            <option value="MP3">MP3</option>
-                            <option value="FLAC">FLAC</option>
-                            <option value="M4A">M4A</option>
-                        </select>
-                    </div>
-
-                    <!-- Size Filter -->
-                    <div class="filter-container">
-                        <select v-model="sizeFilter" class="filter-select">
-                            <option value="">All Sizes</option>
-                            <option value="small">Small (&lt; 100MB)</option>
-                            <option value="medium">Medium (100MB - 1GB)</option>
-                            <option value="large">Large (> 1GB)</option>
-                        </select>
-                    </div>
                 </div>
 
-                <span class="dataset-count">{{ filteredDatasets.length }} dataset{{ filteredDatasets.length !== 1 ? 's' : '' }}</span>
+                <span class="dataset-count">{{ filteredModels.length }} model{{ filteredModels.length !== 1 ? 's' : '' }}</span>
             </div>
             
-            <!-- Show datasets grid when there are filtered results -->
-            <div v-if="filteredDatasets.length > 0" class="datasets-grid">
-                <router-link 
-                    v-for="dataset in filteredDatasets" 
-                    :key="dataset.id" 
-                    :to="`/dataset/${dataset.id}`"
+            <!-- Show models grid when there are filtered results -->
+            <div v-if="filteredModels.length > 0" class="datasets-grid">
+                <div 
+                    v-for="model in filteredModels" 
+                    :key="model.id" 
                     class="dataset-card professional-card clickable-card"
                 >
+                    <router-link :to="`/model/${model.id}`">
                     <div class="card-header">
                         <div class="dataset-icon">
-                            <svg width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
-                                <path d="M4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H4zm0 1h8a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z"/>
-                                <path d="M6 4.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5z"/>
-                            </svg>
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                            <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                            <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                        </svg>
                         </div>
-                        <h3 class="dataset-title">{{ dataset.name }}</h3>
+                        <h3 class="dataset-title">{{ model.name }}</h3>
                     </div>
                     
                     <div class="dataset-content">
-                        <p class="dataset-description">{{ dataset.description || 'Audio dataset for speaker identification training and evaluation' }}</p>
+                        <p class="dataset-description">{{ model.description || 'AI model for speaker identification and analysis' }}</p>
                         
                         <div class="dataset-info">
                             <div class="info-item">
-                                <span class="info-label">Size</span>
-                                <span class="info-value">{{ dataset.size || 'N/A' }}</span>
+                                <span class="info-label">Architecture</span>
+                                <span class="info-value">{{ model.architecture || 'N/A' }}</span>
                             </div>
                             <div class="info-item">
-                                <span class="info-label">Format</span>
-                                <span class="info-value">{{ dataset.format || 'WAV' }}</span>
+                                <span class="info-label">Accuracy</span>
+                                <span class="info-value">{{ model.accuracy || 'N/A' }}%</span>
                             </div>
                             <div class="info-item">
-                                <span class="info-label">Utterances</span>
-                                <span class="info-value">{{ dataset.utterances || 'N/A' }}</span>
+                                <span class="info-label">Version</span>
+                                <span class="info-value">{{ model.version || 'N/A' }}</span>
                             </div>
                         </div>
                     </div>
-                </router-link>
+                    </router-link>
+                </div>
             </div>
 
             <!-- Show no results state when filters applied but no matches -->
@@ -144,9 +125,9 @@
                         <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
                     </svg>
                 </div>
-                <h3>No datasets match your filters</h3>
-                <p>Try adjusting your search terms or filters to find datasets</p>
-                <button class="btn-secondary" @click="searchQuery = ''; formatFilter = ''; sizeFilter = ''">
+                <h3>No models match your filters</h3>
+                <p>Try adjusting your search terms or filters to find models</p>
+                <button class="btn-secondary" @click="searchQuery = ''">
                     Clear Filters
                 </button>
             </div>
@@ -157,70 +138,42 @@
 <script setup>
 import { onMounted, ref, computed } from 'vue'
 import NavigationBar from '@/components/NavigationBar.vue'
-import { useDatasets } from '@/composables/useDatasets'
+import { useModels } from '@/composables/useModels'
 
-const {
-    datasets,
-    loading,
-    error,
-    fetchDatasets,
-} = useDatasets()
+const { models, loading, error, fetchModels } = useModels()
 
 // Filter reactive variables
 const searchQuery = ref('')
-const formatFilter = ref('')
-const sizeFilter = ref('')
 
-// Computed property for filtered datasets
-const filteredDatasets = computed(() => {
-    if (!datasets.value) return []
+// Computed property for filtered models
+const filteredModels = computed(() => {
+    if (!models.value) return []
     
-    let filtered = [...datasets.value]
+    let filtered = [...models.value]
     
     // Search filter
     if (searchQuery.value) {
         const query = searchQuery.value.toLowerCase()
-        filtered = filtered.filter(dataset => 
-            dataset.name?.toLowerCase().includes(query) ||
-            dataset.description?.toLowerCase().includes(query)
+        filtered = filtered.filter(model => 
+            model.name?.toLowerCase().includes(query) ||
+            model.architecture?.toLowerCase().includes(query)
         )
-    }
-    
-    // Format filter
-    if (formatFilter.value) {
-        filtered = filtered.filter(dataset => 
-            dataset.format === formatFilter.value
-        )
-    }
-    
-    // Size filter
-    if (sizeFilter.value) {
-        filtered = filtered.filter(dataset => {
-            const size = dataset.size || ''
-            switch (sizeFilter.value) {
-                case 'small':
-                    return size.includes('MB') && parseInt(size) < 100
-                case 'medium':
-                    return (size.includes('MB') && parseInt(size) >= 100) || 
-                           (size.includes('GB') && parseInt(size) <= 1)
-                case 'large':
-                    return size.includes('GB') && parseInt(size) > 1
-                default:
-                    return true
-            }
-        })
     }
     
     return filtered
 })
 
 onMounted(() => {
-    fetchDatasets()
+    fetchModels()
 })
 </script>
 
 <style scoped>
 /* Container and Layout */
+.dataset-card a{
+    text-decoration: none;
+    color: inherit;
+}
 .data-list-container {
     width: 75%;
     margin: 0 auto;
@@ -394,7 +347,14 @@ onMounted(() => {
 }
 
 /* No Results State (when filters applied but no matches) */
-
+.no-results-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-6) var(--space-4);
+    text-align: center;
+}
 
 .no-results-state .empty-icon {
     color: var(--text-disabled);
@@ -416,10 +376,10 @@ onMounted(() => {
     font-size: 0.9rem;
 }
 
-/* Datasets Section */
-
+/* Models Section */
 .section-header {
-    display: flex; flex-direction: row;
+    display: flex; 
+    flex-direction: row;
     justify-content: space-between;
     align-items: center;
     margin-bottom: var(--space-5);
@@ -433,9 +393,43 @@ onMounted(() => {
 }
 
 .filters-container, .search-container {
-    display: flex; flex-direction: row;
+    display: flex; 
+    flex-direction: row;
     align-items: center;
     gap: var(--space-4);
+}
+
+.search-input {
+    width: 250px;
+    padding: var(--space-2) var(--space-3);
+    border: 1px solid var(--border-default);
+    border-radius: var(--radius-medium);
+    font-size: 0.9rem;
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+    transition: all 0.2s ease;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: var(--accent-secondary);
+    box-shadow: 0 0 0 2px rgba(47, 129, 247, 0.1);
+}
+
+.filter-select {
+    padding: var(--space-2) var(--space-3);
+    border: 1px solid var(--border-default);
+    border-radius: var(--radius-medium);
+    font-size: 0.9rem;
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.filter-select:focus {
+    outline: none;
+    border-color: var(--accent-secondary);
 }
 
 .dataset-count {
@@ -448,7 +442,7 @@ onMounted(() => {
     border-radius: var(--radius-large);
 }
 
-/* Dataset Grid */
+/* Model Grid */
 .datasets-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -553,7 +547,7 @@ onMounted(() => {
     font-size: 0.85rem;
 }
 
-/* Dataset Info */
+/* Model Info */
 .dataset-info {
     display: flex;
     flex-direction: column;
@@ -577,6 +571,25 @@ onMounted(() => {
     font-size: 0.8rem;
     color: var(--text-primary);
     font-weight: 600;
+}
+
+/* Button Styles */
+.btn-secondary {
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+    border: 1px solid var(--border-default);
+    padding: var(--space-2) var(--space-4);
+    border-radius: var(--radius-medium);
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.btn-secondary:hover {
+    background: var(--bg-overlay);
+    border-color: var(--accent-secondary);
+    transform: translateY(-1px);
 }
 
 /* Card Footer */
@@ -619,6 +632,16 @@ onMounted(() => {
     .datasets-grid {
         grid-template-columns: 1fr;
         gap: var(--space-3);
+    }
+    
+    .filters-container {
+        flex-direction: column;
+        align-items: stretch;
+        gap: var(--space-2);
+    }
+    
+    .search-input {
+        width: 100%;
     }
 }
 

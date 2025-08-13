@@ -192,6 +192,7 @@ const deleteAccount = async () => {
 
             if (response.ok) {
                 alert('Account deleted successfully.')
+                user.value = null
                 localStorage.removeItem('user')
                 router.push('/')
             } else {
@@ -205,7 +206,7 @@ const deleteAccount = async () => {
 }
 
 const viewActivity = () => {
-    // TODO: Implement activity log functionality
+    //Implement activity log functionality
     alert('Activity log functionality coming soon!')
 }
 
